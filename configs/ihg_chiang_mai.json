@@ -1,0 +1,88 @@
+{
+  "output_filename": "IHG_ChiangMai_PurchasePlus.pptx",
+  "event": "IHG OA & Finance Conference",
+  "location": "Chiang Mai",
+  "presenter": "Nathan Broadhead",
+  "company": "PurchasePlus",
+  "client": "IHG",
+  "slides": [
+    {
+      "type": "title",
+      "title": "PurchasePlus × IHG",
+      "subtitle": "AI-Powered Procurement — Live Today",
+      "meta": "OA & Finance Conference  |  Chiang Mai  |  2026"
+    },
+    {
+      "type": "section",
+      "topic_number": 1,
+      "title": "Opening",
+      "body": "PurchasePlus has been working with IHG across the EAPAC region for a number of years — sitting inside your procurement workflow every day.\n\nToday we're showing you three things that are live right now."
+    },
+    {
+      "type": "alignment",
+      "topic_number": 2,
+      "title": "Aligned with IHG's 2026 Roadmap",
+      "items": [
+        ["IHG 2026 Goal", "PurchasePlus Today"],
+        ["AI Invoice Automation", "Live — Paperless Emails + AI Scanning"],
+        ["POS & Finance Integration", "Live — Batch Sales + Inventory sync"],
+        ["AI in Business Intelligence", "Live — Real-time Reports + Spend data"],
+        ["Master Data Management", "Live — Standardised product + vendor master"]
+      ]
+    },
+    {
+      "type": "video_slide",
+      "topic_number": 3,
+      "title": "Statement Search",
+      "subtitle": "AI-powered supplier statement reconciliation",
+      "video_file": "video_01_statement_search.mp4",
+      "key_points": [
+        "Supplier statement arrives in any format",
+        "AI matches every line to invoices automatically",
+        "Exceptions flagged — team reviews discrepancies only",
+        "Hours of manual reconciliation → minutes"
+      ]
+    },
+    {
+      "type": "video_slide",
+      "topic_number": 4,
+      "title": "AI Invoice Processing",
+      "subtitle": "From email to approved invoice — zero manual entry",
+      "video_file": "video_02_invoice_processing.mp4",
+      "key_points": [
+        "Invoice arrives by email — any format (PDF, EDI)",
+        "AI reads and extracts all data automatically",
+        "3-way match: Invoice ↔ Purchase Order ↔ Receiving Note",
+        "Auto-approved or flagged — exported to accounting system"
+      ]
+    },
+    {
+      "type": "section",
+      "topic_number": 5,
+      "title": "What's Next",
+      "body": "The next phase uses all of this data to deliver AI-generated procurement recommendations.\n\nWhich supplier gives you the best price. Where you're above benchmark. Where consolidation across properties saves money.\n\nYour roadmap calls for AI in Business Intelligence. That's exactly where we're heading."
+    },
+    {
+      "type": "video_slide",
+      "topic_number": 6,
+      "title": "POS & Inventory",
+      "subtitle": "Next-day food cost visibility — not next month",
+      "video_file": "video_03_pos_inventory.mp4",
+      "optional": true,
+      "key_points": [
+        "POS sales flow into inventory automatically each night",
+        "Stock decremented without manual counting",
+        "F&B cost % visible next morning",
+        "GM and F&B manager see live gross profit"
+      ]
+    },
+    {
+      "type": "closing",
+      "title": "Let's go deeper.",
+      "contact": "Nathan Broadhead",
+      "company": "PurchasePlus",
+      "email": "nathan.broadhead@marketboomer.com",
+      "website": "purchaseplus.com"
+    }
+  ]
+}
