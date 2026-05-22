@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PurchasePlus · Platform Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/PurchasePlus Logos/logo-emblem-mobile.png">
+<style>
+/* ==========================================================================
+   PurchasePlus Presentation Template — canonical design system
+   Single-file HTML. No framework. Vanilla JS.
+   Sidebar nav + one-slide-at-a-time desktop. Scroll-snap on mobile.
+
+   IMAGE PATHS (all relative to this file's location at /template/):
+   Logos:      assets/PurchasePlus Logos/[file]
+   Characters: assets/Longarms Characters/Stand Alone/[file]
+   Scenes:     assets/Longarms Scenes/[file]
+   UI cards:   assets/Colourful UI UX/Stand Alone/[file]
+   Screens:    assets/PurchasePlus Web Application Screens/[file]
+   Devices:    assets/PurchasePlus UI & UX/[file]
+   Web imgs:   assets/Web Content/Images/[file]
+   ========================================================================== */
+
+:root {
+  --grad:        linear-gradient(90deg, #a956ff 0%, #7c5dff 50%, #3766fe 100%);
+  --grad-soft:   linear-gradient(135deg, #f5edff 0%, #eaf1ff 100%);
+  --grad-img:    linear-gradient(160deg, #f0e8ff 0%, #e5edff 100%);
+  --grad-deep:   linear-gradient(135deg, #594574 0%, #220646 100%);
+  --purple:      #7c5dff;
+  --light-purple:#a956ff;
+  --blue:        #3766fe;
+  --ink:         #111827;
+  --ink-soft:    #1f2937;
+  --body:        #4B5563;
+  --muted:       #9ca3af;
+  --soft:        #f8fafc;
+  --softer:      #fafafa;
+  --border:      #e5e7eb;
+  --border-soft: #f3f4f6;
+  --bg:          #ffffff;
+  --green:       #10b981;
+  --shadow:      0 4px 16px rgba(15,23,42,.07), 0 1px 3px rgba(15,23,42,.05);
+  --shadow-lg:   0 24px 56px rgba(15,23,42,.10), 0 4px 12px rgba(15,23,42,.06);
+  --radius:      12px;
+  --radius-pill: 999px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg); }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--body);
+  font-size: 15px;
+  line-height: 1.6;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+h1, h2, h3, h4, h5, h6, p { text-wrap: balance; color: var(--ink); }
+h1 { font-size: clamp(40px, 5.4vw, 68px); font-weight: 200; letter-spacing: -1.8px; line-height: 1.04; }
+h2 { font-size: clamp(30px, 3.8vw, 52px); font-weight: 200; letter-spacing: -1.2px; line-height: 1.08; }
+h3 { font-size: 17px; font-weight: 500; letter-spacing: -.2px; }
+h4 { font-size: 13.5px; font-weight: 600; }
+p  { font-weight: 300; }
+ul { list-style: none; }
+button { font-family: inherit; cursor: pointer; border: 0; background: none; }
+.mono { font-family: 'JetBrains Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+
+/* ── Animated gradient text ── */
+.grad {
+  background: linear-gradient(90deg, #a956ff 0%, #a956ff 20%, #7c5dff 50%, #3766fe 80%, #3766fe 100%);
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  font-weight: inherit;
+  animation: gradPulse 5s linear infinite;
+}
+@keyframes gradPulse {
+  0%   { background-position: 200% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   APP SHELL
+   ══════════════════════════════════════════════════════════ */
+.app { display: grid; grid-template-columns: 280px 1fr; height: 100dvh; }
+
+/* ── Sidebar ── */
+.sb {
+  background: linear-gradient(180deg, #fafafa 0%, #fff 100%);
+  border-right: 1px solid var(--border);
+  padding: 24px 16px 18px;
+  display: flex; flex-direction: column;
+  height: 100dvh; overflow: hidden;
+}
+.sb-brand {
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 6px 18px;
+  border-bottom: 1px solid var(--border-soft);
+  margin-bottom: 14px;
+}
+.sb-brand img { height: 36px; width: auto; max-width: 200px; }
+.sb-eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; padding: 0 8px 12px;
+}
+.sb-list { flex: 1; overflow-y: auto; padding-right: 2px; }
+.sb-list::-webkit-scrollbar { width: 4px; }
+.sb-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.sb-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 10px 12px; border-radius: 10px; cursor: pointer;
+  margin-bottom: 2px; transition: all .15s;
+  border: 1px solid transparent; user-select: none;
+}
+.sb-item:hover { background: var(--softer); }
+.sb-item.is-active {
+  background: linear-gradient(135deg, rgba(169,86,255,.08) 0%, rgba(55,102,254,.06) 100%);
+  border-color: rgba(124,93,255,.22);
+}
+.sb-item-num {
+  font-size: 11px; font-weight: 600; color: var(--muted);
+  font-family: 'JetBrains Mono', monospace; min-width: 22px;
+  padding-top: 2px; letter-spacing: .04em;
+}
+.sb-item.is-active .sb-item-num { color: var(--purple); }
+.sb-item-label { font-size: 13px; font-weight: 500; color: var(--ink-soft); line-height: 1.35; }
+.sb-item.is-active .sb-item-label { color: var(--ink); font-weight: 600; }
+.sb-foot {
+  padding-top: 14px; border-top: 1px solid var(--border-soft);
+  font-size: 11px; color: var(--muted);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.sb-foot-hint { display: flex; align-items: center; gap: 6px; }
+.kbd {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 18px; height: 18px; padding: 0 5px;
+  font-size: 10px; font-weight: 600; font-family: 'JetBrains Mono', monospace;
+  background: #fff; border: 1px solid var(--border); border-radius: 4px;
+  color: var(--ink); box-shadow: 0 1px 0 rgba(15,23,42,.04);
+}
+.dot {
+  width: 8px; height: 8px; background: var(--green);
+  border-radius: 50%; display: inline-block;
+  box-shadow: 0 0 0 3px rgba(16,185,129,.18);
+  animation: dotPulse 2.4s ease infinite;
+}
+@keyframes dotPulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(16,185,129,.18); }
+  50%       { box-shadow: 0 0 0 7px rgba(16,185,129,.04); }
+}
+
+/* Mobile sidebar toggle */
+.sb-toggle {
+  display: none; position: fixed; top: 14px; left: 14px; z-index: 110;
+  width: 36px; height: 36px; background: #fff; border: 1px solid var(--border);
+  border-radius: 9px; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px; cursor: pointer; box-shadow: 0 2px 8px rgba(15,23,42,.08);
+}
+.sb-toggle span { width: 16px; height: 2px; background: var(--ink); border-radius: 1px; display: block; }
+.sb-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.3); z-index: 99; }
+.sb-overlay.is-open { display: block; }
+
+/* ── Main ── */
+.main { position: relative; height: 100dvh; overflow: hidden; }
+.slides { position: relative; height: 100%; }
+
+/* ── Slide base ── */
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: row;
+  opacity: 0; pointer-events: none;
+  transition: opacity .42s ease, transform .42s ease;
+  transform: translateY(12px);
+}
+.slide.is-active { opacity: 1; pointer-events: auto; transform: translateY(0); }
+
+/* Left content panel */
+.slide-left {
+  flex: 0 0 56%;
+  padding: 52px 68px 100px;
+  display: flex; flex-direction: column; justify-content: center;
+  overflow-y: auto; position: relative;
+}
+.slide-left::-webkit-scrollbar { width: 0; }
+
+/* Right visual panel */
+.slide-right {
+  flex: 1;
+  position: relative; overflow: hidden;
+  background: var(--grad-img);
+  border-left: 1px solid var(--border-soft);
+}
+.slide-right::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at top left, rgba(169,86,255,.18) 0%, transparent 56%);
+  pointer-events: none; z-index: 0;
+}
+
+/* ── Right panel image layers ── */
+
+/* Full-screen background screen (dimmed, gives context) */
+.sr-bg-screen {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: top center;
+  opacity: .18;
+  z-index: 1;
+}
+
+/* Device mockup — centered, large, sits at bottom */
+.sr-device {
+  position: absolute;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 88%; height: auto;
+  max-height: 82%;
+  object-fit: contain; object-position: bottom center;
+  z-index: 2;
+  filter: drop-shadow(0 12px 40px rgba(15,23,42,.14));
+}
+
+/* Single artboard screen — PNG drop-shadow, no white container */
+.sr-screen {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 86%; height: auto;
+  max-height: 80%;
+  object-fit: contain;
+  z-index: 2;
+  filter: drop-shadow(0 16px 48px rgba(15,23,42,.24)) drop-shadow(0 4px 12px rgba(15,23,42,.12));
+}
+
+/* Longarms character — stands at bottom, overlaps device/screen */
+.sr-char {
+  position: absolute;
+  bottom: 0; right: 4%;
+  height: 72%; width: auto;
+  object-fit: contain; object-position: bottom right;
+  z-index: 4;
+  filter: drop-shadow(0 8px 24px rgba(15,23,42,.12));
+}
+
+/* Longarms scene — fills the panel */
+.sr-scene {
+  position: absolute;
+  inset: 0; padding: 24px 16px 0;
+  width: 100%; height: 100%;
+  object-fit: contain; object-position: center bottom;
+  z-index: 2;
+}
+
+/* Floating UI cards — drop-shadow on PNG, no white backing container */
+.sr-card {
+  position: absolute;
+  z-index: 3;
+  background: transparent;
+  filter: drop-shadow(0 10px 32px rgba(15,23,42,.20)) drop-shadow(0 2px 6px rgba(15,23,42,.10));
+}
+
+/* Dark right panel variant (closing/CTA slides) */
+.slide-right.dark {
+  background: var(--grad-deep);
+  border-left-color: transparent;
+}
+.slide-right.dark::before { display: none; }
+
+/* Dark panel content */
+.dark-cta {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  height: 100%; padding: 48px 36px; gap: 22px;
+  text-align: center;
+}
+.dark-cta-eyebrow {
+  font-size: 10px; font-weight: 700; letter-spacing: .2em;
+  text-transform: uppercase; color: rgba(255,255,255,.4);
+}
+.dark-cta-headline {
+  font-size: clamp(22px, 2.8vw, 34px); font-weight: 200;
+  letter-spacing: -1px; color: #fff; line-height: 1.18; text-wrap: balance;
+}
+.dark-cta-url {
+  font-family: 'JetBrains Mono', monospace; font-size: 12.5px;
+  color: rgba(169,86,255,.85); letter-spacing: .04em;
+}
+.dark-cta-divider { width: 36px; height: 1px; background: rgba(255,255,255,.12); }
+.dark-logo {
+  width: 120px; height: auto; opacity: .2;
+  filter: brightness(10); /* white */
+}
+
+/* ── Slide chrome ── */
+.slide-eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: .18em;
+  text-transform: uppercase; margin-bottom: 20px;
+}
+.slide-left h1 { margin-bottom: 22px; max-width: 18ch; }
+.slide-left h2 { margin-bottom: 18px; max-width: 22ch; }
+.slide-left p.lead {
+  font-size: 18px; font-weight: 300; color: var(--body);
+  max-width: 50ch; line-height: 1.55; margin-bottom: 28px;
+}
+.slide-left p.kicker {
+  font-size: 12.5px; font-weight: 400; color: var(--muted); margin-top: 20px;
+}
+
+/* ── Slide footer ── */
+.slide-footer {
+  position: absolute; left: 68px; right: 32px; bottom: 26px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 11px; color: var(--muted); pointer-events: none; z-index: 20;
+}
+.slide-counter { font-family: 'JetBrains Mono', monospace; letter-spacing: .14em; font-weight: 500; }
+.slide-progress { flex: 1; margin: 0 20px; height: 2px; background: var(--border-soft); border-radius: 2px; overflow: hidden; }
+.slide-progress-fill { height: 100%; background: var(--grad); border-radius: 2px; transition: width .42s ease; }
+.footer-brand { font-weight: 600; letter-spacing: .04em; color: var(--muted); }
+
+/* Nav arrows */
+.nav-arrows {
+  position: absolute; bottom: 20px; right: 20px;
+  display: flex; flex-direction: column; gap: 6px; z-index: 20;
+}
+.nav-arrow {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid var(--border); background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all .15s; color: var(--ink);
+  box-shadow: var(--shadow);
+}
+.nav-arrow:hover { background: var(--softer); border-color: var(--purple); color: var(--purple); }
+.nav-arrow.is-disabled { opacity: .3; pointer-events: none; }
+.nav-arrow svg { width: 14px; height: 14px; }
+
+/* ══════════════════════════════════════════════════════════
+   SLIDE COMPONENTS
+   ══════════════════════════════════════════════════════════ */
+
+/* Cover meta strip */
+.cover-meta {
+  display: flex; gap: 18px; align-items: center;
+  margin-top: 40px; padding-top: 20px;
+  border-top: 1px solid var(--border-soft);
+  max-width: 580px;
+}
+.cover-logo { height: 28px; opacity: .9; }
+.cover-meta-text { font-size: 12.5px; color: var(--muted); }
+.cover-meta-text strong { color: var(--ink); font-weight: 600; }
+
+/* Stats row */
+.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.stat-card { padding: 18px 0 4px; border-top: 2px solid var(--ink); }
+.stat-num {
+  font-size: clamp(22px, 2.6vw, 34px); font-weight: 200;
+  letter-spacing: -1px; line-height: 1; color: var(--ink); margin-bottom: 10px;
+  white-space: nowrap;
+}
+.stat-num .grad { font-weight: 300; }
+.stat-label { font-size: 13.5px; line-height: 1.5; color: var(--body); font-weight: 400; }
+
+/* Pillars (3-col) */
+.pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 8px; }
+.pillar { padding: 18px 0 0; border-top: 1px solid var(--border); }
+.pillar-num {
+  font-family: 'JetBrains Mono', monospace; font-size: 22px;
+  font-weight: 200; letter-spacing: -1px; color: var(--ink); margin-bottom: 4px; line-height: 1;
+}
+.pillar-title { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 6px; line-height: 1.3; }
+.pillar-body  { font-size: 13px; color: var(--body); line-height: 1.55; }
+
+/* Concept cards (vertical list) */
+.concept-grid { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
+.concept-card {
+  padding: 14px 18px; background: var(--softer);
+  border: 1px solid var(--border-soft); border-radius: var(--radius);
+  display: flex; gap: 14px; align-items: flex-start;
+}
+.concept-tag {
+  display: inline-block; padding: 3px 9px; background: var(--grad);
+  color: #fff; font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; font-weight: 700; letter-spacing: .14em;
+  border-radius: 4px; flex-shrink: 0; white-space: nowrap; margin-top: 2px;
+}
+.concept-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+.concept-body  { font-size: 13px; color: var(--body); line-height: 1.5; }
+
+/* 2-column show grid */
+.show-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+.show-card {
+  padding: 16px 18px; background: var(--softer);
+  border: 1px solid var(--border-soft); border-radius: var(--radius);
+}
+.show-tag {
+  font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
+  font-weight: 700; letter-spacing: .14em; color: var(--purple);
+  text-transform: uppercase; margin-bottom: 6px;
+}
+.show-title { font-size: 13.5px; font-weight: 600; color: var(--ink); margin-bottom: 5px; line-height: 1.3; }
+.show-body  { font-size: 13px; color: var(--body); line-height: 1.55; }
+
+/* Timeline */
+.timeline { display: flex; flex-direction: column; gap: 0; margin-top: 4px; }
+.tl-item {
+  display: grid; grid-template-columns: 72px 1fr; gap: 14px;
+  padding: 13px 0; border-bottom: 1px solid var(--border-soft);
+  align-items: start;
+}
+.tl-item:last-child { border-bottom: none; }
+.tl-num {
+  font-family: 'JetBrains Mono', monospace; font-size: 26px;
+  font-weight: 200; letter-spacing: -1px; color: var(--muted);
+  line-height: 1; margin-top: 2px;
+}
+.tl-item.active .tl-num { color: var(--purple); }
+.tl-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 3px; line-height: 1.3; }
+.tl-body  { font-size: 13px; color: var(--body); line-height: 1.5; }
+
+/* Statement / quote block */
+.statement-block {
+  padding: 20px 26px; background: var(--grad-soft);
+  border-left: 3px solid var(--purple); border-radius: 0 var(--radius) var(--radius) 0;
+  margin-bottom: 22px;
+}
+.statement-block p {
+  font-size: 15.5px; font-weight: 300; color: var(--ink);
+  line-height: 1.65; font-style: italic; text-wrap: balance;
+}
+
+/* Result metrics strip */
+.metrics-row { display: flex; gap: 0; margin-top: 20px; border-top: 1px solid var(--border-soft); }
+.metric { flex: 1; padding: 18px 0 4px; }
+.metric + .metric { padding-left: 18px; border-left: 1px solid var(--border-soft); margin-left: 0; padding-left: 18px; }
+.metric-num {
+  font-size: 30px; font-weight: 200; letter-spacing: -1.5px;
+  color: var(--ink); line-height: 1; margin-bottom: 4px;
+}
+.metric-label { font-size: 12px; color: var(--body); line-height: 1.4; }
+
+/* CTA button */
+.cta-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--grad); color: #fff;
+  font-size: 15px; font-weight: 600; letter-spacing: .01em;
+  padding: 13px 28px; border-radius: var(--radius-pill); border: none;
+  cursor: pointer; white-space: nowrap;
+  box-shadow: 0 4px 18px rgba(124,93,255,.32);
+  transition: transform .15s, box-shadow .15s;
+  margin-top: 28px;
+}
+.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(124,93,255,.48); }
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════════════════ */
+
+@media (max-width: 1600px) {
+  .app { grid-template-columns: 280px 1fr; }
+}
+@media (max-width: 1280px) {
+  .app { grid-template-columns: 240px 1fr; }
+  .slide-left { padding: 36px 48px 90px; }
+  .slide-left h2 { font-size: clamp(24px, 3vw, 44px); }
+}
+
+/* ════════════════════════════════════════════════════
+   TABLET + MOBILE — scroll-snap layout
+   ════════════════════════════════════════════════════ */
+@media (max-width: 1100px) {
+  .app { grid-template-columns: 1fr; height: 100dvh; }
+
+  .sb {
+    position: fixed; left: 0; top: 0; bottom: 0; width: 280px; z-index: 100;
+    transform: translateX(-100%); transition: transform .28s cubic-bezier(.4,0,.2,1);
+    box-shadow: 6px 0 32px rgba(15,23,42,.14); height: 100dvh;
+  }
+  .sb.is-open { transform: translateX(0); }
+  .sb-toggle { display: flex; }
+
+  .main {
+    overflow-y: scroll; height: 100dvh;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .slides { position: static; height: auto; display: block; }
+
+  .slide {
+    position: static !important; opacity: 1 !important;
+    transform: none !important; pointer-events: auto !important;
+    display: flex; flex-direction: column; height: auto;
+  }
+
+  .slide-right {
+    order: -1; flex: none; width: 100%; height: 100dvh;
+    scroll-snap-align: start; border-left: none; overflow: hidden;
+  }
+  .slide-right.dark { order: 1; }
+
+  .slide-left {
+    flex: none; width: 100%; height: 100dvh;
+    scroll-snap-align: start;
+    padding: 56px 26px 88px; box-sizing: border-box;
+    overflow: hidden; justify-content: space-between;
+  }
+  .slide-left h1 { font-size: clamp(28px, 6vw, 44px); margin-bottom: 14px; }
+  .slide-left h2 { font-size: clamp(22px, 4.5vw, 38px); letter-spacing: -.4px; margin-bottom: 10px; }
+  .slide-left p.lead { font-size: clamp(14px, 2.2vw, 16px); margin-bottom: 14px; }
+  .slide-eyebrow { margin-bottom: 8px; }
+
+  /* Mobile right-panel images */
+  .sr-device { width: 80%; max-height: 72%; }
+  .sr-char   { height: 60%; right: 2%; }
+  .sr-screen { width: 78%; max-height: 72%; }
+  .sr-card   { transform: none !important; }
+
+  /* Component reductions */
+  .stats-row { grid-template-columns: 1fr; gap: 0; }
+  .stat-card { padding: 12px 0; border-top: 1px solid var(--border-soft); }
+  .stat-card:first-child { border-top: 2px solid var(--ink); }
+  .stat-num { font-size: 28px; margin-bottom: 4px; }
+
+  .pillars { grid-template-columns: 1fr; gap: 0; }
+  .pillar { border-top: 1px solid var(--border-soft); padding: 12px 0; }
+  .pillar:first-child { border-top: none; padding-top: 0; }
+  .pillar-num { font-size: 18px; }
+
+  .concept-grid { gap: 8px; }
+  .concept-card { padding: 11px 14px; }
+
+  .show-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .show-card { padding: 12px 14px; }
+  .show-title { font-size: 12.5px; }
+  .show-body  { font-size: 12px; }
+
+  .timeline { gap: 0; }
+  .tl-item { padding: 10px 0; grid-template-columns: 48px 1fr; }
+  .tl-num { font-size: 18px; }
+  .tl-title { font-size: 13px; }
+
+  .statement-block { padding: 14px 18px; margin-bottom: 12px; }
+  .statement-block p { font-size: 13.5px; }
+
+  .metrics-row { flex-wrap: wrap; }
+  .metric { min-width: 45%; padding: 10px 0 !important; border-left: none !important; }
+  .metric-num { font-size: 24px; }
+
+  .cover-meta { margin-top: 16px; padding-top: 14px; }
+
+  .slide-footer { left: 14px; right: 14px; bottom: 12px; position: fixed; font-size: 10.5px; }
+  .nav-arrows   { bottom: 50px; right: 14px; }
+}
+
+@media (max-width: 900px) {
+  .slide-left { padding: 48px 22px 80px; }
+  .slide-left h2 { font-size: clamp(20px, 4vw, 30px); }
+  .slide-left p.lead { font-size: clamp(13px, 2vw, 15px); }
+}
+
+@media (max-width: 600px) {
+  .slide-left { padding: 44px 18px 76px; }
+  .slide-left h1 { font-size: clamp(22px, 6vw, 30px); }
+  .slide-left h2 { font-size: clamp(18px, 5vw, 26px); letter-spacing: -.2px; margin-bottom: 8px; }
+  .slide-left p.lead { font-size: clamp(12.5px, 3.5vw, 15px); margin-bottom: 10px; }
+  .show-grid { grid-template-columns: 1fr; gap: 6px; }
+  .cta-btn { font-size: 14px; padding: 11px 22px; }
+  .slide-footer { left: 10px; right: 10px; bottom: 8px; }
+  .nav-arrows { bottom: 44px; right: 10px; }
+  .nav-arrow { width: 30px; height: 30px; }
+}
+
+@media (max-width: 420px) {
+  .slide-left { padding: 40px 14px 70px; }
+  .slide-left h2 { font-size: clamp(17px, 5.5vw, 22px); }
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ════════════════════════════════════
+       SIDEBAR
+       ════════════════════════════════════ -->
+  <aside class="sb" id="sidebar">
+    <div class="sb-brand">
+      <img src="assets/PurchasePlus Logos/logo-horizontal-color.png" alt="PurchasePlus">
+    </div>
+    <!-- Update eyebrow to match presentation topic -->
+    <div class="sb-eyebrow"><span class="grad">Platform Overview</span></div>
+    <nav class="sb-list" id="sbList"></nav>
+    <button class="sb-toggle" id="sbToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="sb-overlay" id="sbOverlay"></div>
+    <div class="sb-foot">
+      <div class="sb-foot-hint">
+        <span class="kbd">↑</span><span class="kbd">↓</span>
+      </div>
+      <div><span class="dot"></span></div>
+    </div>
+  </aside>
+
+  <!-- ════════════════════════════════════
+       MAIN
+       ════════════════════════════════════ -->
+  <main class="main" id="mainEl">
+    <div class="slides" id="slides">
+
+      <!-- ══════════════════════════════
+           SLIDE 01 — COVER
+           Device mockup + Longarms scene layered
+           ══════════════════════════════ -->
+      <section class="slide is-active" data-title="Better Procurement">
+
+        <div class="slide-left">
+          <h1>Better Procurement.<br><span class="grad">Better Hospitality.</span></h1>
+          <p class="lead">PurchasePlus is the procurement platform built for hospitality. One marketplace, every supplier, full visibility from order to invoice.</p>
+          <div class="cover-meta">
+            <img src="assets/PurchasePlus Logos/98-082 PurchasePlus Logo Emblem RGB 72dpi.png" alt="PurchasePlus" class="cover-logo">
+            <!-- Update: presenter name, date, audience -->
+            <div class="cover-meta-text"><strong>PurchasePlus</strong> · Platform Overview · 2026</div>
+          </div>
+        </div>
+
+        <div class="slide-right">
+          <!-- Device fills entire panel via cover crop — product UI is the hero -->
+          <img src="assets/PurchasePlus UI & UX/002_responsive-marketplace-desktop-mobile.png"
+               alt="PurchasePlus on desktop and mobile"
+               style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center top; z-index:2; filter:drop-shadow(0 12px 40px rgba(15,23,42,.14));">
+          <!-- Manager character peeks from bottom-right corner -->
+          <img src="assets/Longarms Characters/Stand Alone/98-084 PurchasePlus Longarm Illustration Manager Retina.png"
+               alt=""
+               style="position:absolute; bottom:0; right:0; height:52%; width:auto; z-index:4; filter:drop-shadow(0 8px 28px rgba(15,23,42,.16));">
+        </div>
+
+      </section>
+
+      <!-- ══════════════════════════════
+           SLIDE 02 — THE CHALLENGE
+           Dashboard screen + Bargain Brian
+           ══════════════════════════════ -->
+      <section class="slide" data-title="The Challenge">
+
+        <div class="slide-left">
+          <div class="slide-eyebrow"><span class="grad">01 / The Challenge</span></div>
+          <h2>Procurement is still<br><span class="grad">costing you.</span></h2>
+          <p class="lead">Manual ordering, disconnected suppliers, and zero visibility into spend are draining hospitality margins every day.</p>
+          <div class="stats-row">
+            <div class="stat-card">
+              <div class="stat-num"><span class="grad">68%</span></div>
+              <div class="stat-label">of hospitality operators still process purchase orders manually.</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-num">$240K</div>
+              <div class="stat-label">average annual overspend per property from unmanaged supplier pricing.</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-num"><span class="grad">14 days</span></div>
+              <div class="stat-label">average invoice approval cycle. Industry best practice is 3 days.</div>
+            </div>
+          </div>
+          <p class="kicker">Source: PurchasePlus 2026 Hospitality Procurement Index.</p>
+        </div>
+
+        <div class="slide-right">
+          <!-- Requisitions / approval screen as context -->
+          <img class="sr-screen"
+               src="assets/PurchasePlus Web Application Screens/Artboard 3_PurchasePlu.png"
+               alt="Requisitions awaiting approval"
+               style="top:46%;transform:translate(-50%,-50%) rotate(2deg);">
+          <!-- Bargain Brian standing in front -->
+          <img class="sr-char"
+               src="assets/Longarms Characters/Named Characters/98-084 PurchasePlus Longarm Illustration Bargain Brian Retina.png"
+               alt=""
+               style="right:2%;">
+          <!-- Floating KPI card -->
+          <img class="sr-card"
+               src="assets/Colourful UI UX/Stand Alone/Total Spend.png"
+               alt=""
+               style="top:12%; left:8%; width:36%; max-width:160px;">
+        </div>
+
+      </section>
+
+      <!-- ══════════════════════════════
+           SLIDE 03 — THE PLATFORM
+           Dashboard artboard + Manager character
+           ══════════════════════════════ -->
+      <section class="slide" data-title="The Platform">
+
+        <div class="slide-left">
+          <div class="slide-eyebrow"><span class="grad">02 / The Platform</span></div>
+          <h2>One platform.<br><span class="grad">Everything connected.</span></h2>
+          <p class="lead">PurchasePlus replaces fragmented supplier relationships, manual POs, and paper invoices with a single intelligent procurement layer.</p>
+          <div class="pillars">
+            <div class="pillar">
+              <div class="pillar-num mono">01</div>
+              <div class="pillar-title">Smart Marketplace</div>
+              <div class="pillar-body">5,000+ suppliers. Real-time pricing. Order from any device.</div>
+            </div>
+            <div class="pillar">
+              <div class="pillar-num mono">02</div>
+              <div class="pillar-title">AI Invoicing</div>
+              <div class="pillar-body">3-way match, automated approval, AP sync in under 60 seconds.</div>
+            </div>
+            <div class="pillar">
+              <div class="pillar-num mono">03</div>
+              <div class="pillar-title">Full Visibility</div>
+              <div class="pillar-body">Spend analytics, budget tracking, and compliance reporting.</div>
+            </div>
+          </div>
+          <p class="kicker">Integrates with 40+ POS and accounting systems including Xero, Oracle, and MYOB.</p>
+        </div>
+
+        <div class="slide-right">
+          <!-- Dashboard home screen dimmed as background layer -->
+          <img class="sr-bg-screen"
+               src="assets/PurchasePlus Web Application Screens/Artboard 2_PurchasePlu.png"
+               alt="">
+          <!-- Dashboard card floating -->
+          <img class="sr-card"
+               src="assets/Colourful UI UX/Stand Alone/Amount Spent Per Category.png"
+               alt=""
+               style="top:10%; left:50%; transform:translateX(-50%); width:58%; max-width:240px;">
+          <!-- Procurement savings chart -->
+          <img class="sr-card"
+               src="assets/Colourful UI UX/Stand Alone/Procurement Savings.png"
+               alt=""
+               style="top:42%; right:6%; width:44%; max-width:180px; transform:rotate(1.5deg);">
+          <!-- Manager character -->
+          <img class="sr-char"
+               src="assets/Longarms Characters/Stand Alone/98-084 PurchasePlus Longarm Illustration Manager Retina.png"
+               alt=""
+               style="right:0%; height:64%;">
+        </div>
+
+      </section>
+
+      <!-- ══════════════════════════════
+           SLIDE 04 — HOW IT WORKS
+           PO screen + Speedy Simon
+           ══════════════════════════════ -->
+      <section class="slide" data-title="How It Works">
+
+        <div class="slide-left">
+          <div class="slide-eyebrow"><span class="grad">03 / How It Works</span></div>
+          <h2>From order to invoice<br><span class="grad">in four steps.</span></h2>
+          <p class="lead">PurchasePlus handles the full procurement cycle so your team can focus on hospitality, not paperwork.</p>
+          <div class="timeline">
+            <div class="tl-item active">
+              <div class="tl-num mono grad">01</div>
+              <div>
+                <div class="tl-title">Browse and order from the marketplace</div>
+                <div class="tl-body">Staff place orders on any device. Real-time pricing from 5,000+ verified suppliers.</div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-num mono">02</div>
+              <div>
+                <div class="tl-title">Approve in seconds, not days</div>
+                <div class="tl-body">Automated approval workflows route POs to the right person based on value and category.</div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-num mono">03</div>
+              <div>
+                <div class="tl-title">Receive goods and confirm delivery</div>
+                <div class="tl-body">Mobile receiving confirms delivery against the original order. Discrepancies flagged instantly.</div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-num mono">04</div>
+              <div>
+                <div class="tl-title">AI matches and syncs the invoice</div>
+                <div class="tl-body">3-way match against PO and delivery note. Auto-coded and posted to your accounting system.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-right">
+          <!-- Purchase orders list with green approvals -->
+          <img class="sr-screen"
+               src="assets/PurchasePlus Web Application Screens/Artboard 5_PurchasePlu.png"
+               alt="Purchase orders list"
+               style="top:42%; transform:translate(-50%,-50%) rotate(-1.5deg); width:80%;">
+          <!-- Closed invoices KPI -->
+          <img class="sr-card"
+               src="assets/Colourful UI UX/Stand Alone/Closed Invoices.png"
+               alt=""
+               style="top:8%; right:8%; width:40%; max-width:160px;">
+          <!-- Speedy Simon — efficiency character -->
+          <img class="sr-char"
+               src="assets/Longarms Characters/Named Characters/98-084 PurchasePlus Longarm Illustration Speedy Simon Retina.png"
+               alt=""
+               style="height:66%; right:1%;">
+        </div>
+
+      </section>
+
+      <!-- ══════════════════════════════
+           SLIDE 05 — WHAT YOU GET
+           Spend analytics hero + UI cards collage
+           ══════════════════════════════ -->
+      <section class="slide" data-title="What You Get">
+
+        <div class="slide-left">
+          <div class="slide-eyebrow"><span class="grad">04 / What You Get</span></div>
+          <h2>Real outcomes.<br><span class="grad">Not promises.</span></h2>
+          <p class="lead">Every PurchasePlus property sees measurable results within the first 90 days of going live.</p>
+          <div class="show-grid">
+            <div class="show-card">
+              <div class="show-tag">SAVINGS</div>
+              <div class="show-title">Cost reduction from day one</div>
+              <div class="show-body">Supplier price benchmarking and contract compliance stop overpayment before it happens.</div>
+            </div>
+            <div class="show-card">
+              <div class="show-tag">COMPLIANCE</div>
+              <div class="show-title">Audit-ready at all times</div>
+              <div class="show-body">Every PO, approval, and invoice is logged with a full digital trail. SOC2 and ISO 27001 certified.</div>
+            </div>
+            <div class="show-card">
+              <div class="show-tag">EFFICIENCY</div>
+              <div class="show-title">Hours back for your team</div>
+              <div class="show-body">Staff spend 80% less time on ordering and invoice chasing. Redeployed to guest-facing work.</div>
+            </div>
+            <div class="show-card">
+              <div class="show-tag">VISIBILITY</div>
+              <div class="show-title">Spend in one dashboard</div>
+              <div class="show-body">Real-time view across every property. Category analysis, budget alerts, trend reports.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-right">
+          <!-- Spend analytics hero illustration — cloud composition -->
+          <img class="sr-scene"
+               src="assets/Colourful UI UX/Illustrations/Hero Videos/002_spend-analytics-dashboard-hero.png"
+               alt="Spend analytics dashboard"
+               style="object-fit:contain; padding:24px 16px; opacity:.92;">
+          <!-- Food cost KPI floating -->
+          <img class="sr-card"
+               src="assets/Colourful UI UX/Stand Alone/Food Cost.png"
+               alt=""
+               style="bottom:12%; left:6%; width:38%; max-width:148px; transform:rotate(-2deg);">
+        </div>
+
+      </section>
+
+      <!-- ══════════════════════════════
+           SLIDE 06 — PROVEN AT SCALE
+           Buyer + Seller scene
+           ══════════════════════════════ -->
+      <section class="slide" data-title="Proven at Scale">
+
+        <div class="slide-left">
+          <div class="slide-eyebrow"><span class="grad">05 / Proven at Scale</span></div>
+          <h2>5,000 properties.<br><span class="grad">One platform.</span></h2>
+          <div class="statement-block">
+            <p>"We cut our invoice processing time from 14 days to under 48 hours in the first month. PurchasePlus didn't just save us money, it gave us back control of our operation."</p>
+          </div>
+          <p class="kicker" style="margin-top:4px;">Head of Procurement, leading Asia-Pacific hotel group.</p>
+          <div class="metrics-row">
+            <div class="metric">
+              <div class="metric-num"><span class="grad">5,000+</span></div>
+              <div class="metric-label">Properties live across APAC, EMEA, and North America.</div>
+            </div>
+            <div class="metric">
+              <div class="metric-num">$2.4B</div>
+              <div class="metric-label">Annual procurement processed through the platform.</div>
+            </div>
+            <div class="metric">
+              <div class="metric-num"><span class="grad">99.9%</span></div>
+              <div class="metric-label">Platform uptime SLA. SOC2 and ISO 27001 certified.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-right">
+          <!-- Decorative cloud — top left -->
+          <img src="assets/Colourful UI UX/Stand Alone/CLOUDS.png" alt=""
+               style="position:absolute; top:-4%; left:-8%; width:52%; opacity:.55; z-index:1; transform:rotate(-12deg);">
+          <!-- Decorative cloud — top right -->
+          <img src="assets/Colourful UI UX/Stand Alone/CLOUDS.png" alt=""
+               style="position:absolute; top:-2%; right:-12%; width:44%; opacity:.4; z-index:1; transform:rotate(18deg) scaleX(-1);">
+          <!-- Procurement Savings card — top center -->
+          <img class="sr-card"
+               src="assets/Colourful UI UX/Stand Alone/Procurement Savings.png" alt=""
+               style="top:6%; left:50%; transform:translateX(-50%); width:54%; max-width:210px; z-index:3;">
+          <!-- Buyer and Seller scene — anchored bottom, fills lower two-thirds -->
+          <img class="sr-scene"
+               src="assets/Longarms Scenes/98-084 PurchasePlus Scene Illustration Buyer and Seller Interaction Transparent 300dpi.png"
+               alt="Buyer and supplier connected"
+               style="padding:28% 4px 0; object-position:bottom center; opacity:.96;">
+        </div>
+
+      </section>
+
+      <!-- ══════════════════════════════
+           SLIDE 07 — GET STARTED
+           Concept cards + dark CTA panel
+           ══════════════════════════════ -->
+      <section class="slide" data-title="Get Started">
+
+        <div class="slide-left">
+          <div class="slide-eyebrow"><span class="grad">06 / Get Started</span></div>
+          <h2>Ready when<br><span class="grad">you are.</span></h2>
+          <p class="lead">PurchasePlus is live in under 30 days. No disruption to current operations. Your team is supported every step of the way.</p>
+          <div class="concept-grid">
+            <div class="concept-card">
+              <div class="concept-tag">WEEK 1</div>
+              <div>
+                <div class="concept-title">Setup and onboarding</div>
+                <div class="concept-body">Supplier connections, system integrations, and team training handled by our implementation team.</div>
+              </div>
+            </div>
+            <div class="concept-card">
+              <div class="concept-tag">WEEK 2-4</div>
+              <div>
+                <div class="concept-title">Go live on your first property</div>
+                <div class="concept-body">Full support during first month. Dedicated customer success manager from day one.</div>
+              </div>
+            </div>
+            <div class="concept-card">
+              <div class="concept-tag">DAY 90</div>
+              <div>
+                <div class="concept-title">Savings review</div>
+                <div class="concept-body">We show you exactly what PurchasePlus has saved you. Transparent, in writing.</div>
+              </div>
+            </div>
+          </div>
+          <button class="cta-btn" onclick="window.open('https://purchaseplus.com','_blank')">
+            Book a demo
+          </button>
+        </div>
+
+        <!-- Dark right panel -->
+        <div class="slide-right dark">
+          <div class="dark-cta">
+            <div class="dark-cta-eyebrow">Get in touch</div>
+            <!-- Vertical logo: colored emblem + white PurchasePlus text + white slogan -->
+            <img src="assets/PurchasePlus Logos/logo-vertical-slogan-white.png"
+                 alt="PurchasePlus" style="width:180px; height:auto; opacity:.92;">
+            <div class="dark-cta-divider"></div>
+            <div class="dark-cta-url">purchaseplus.com</div>
+          </div>
+        </div>
+
+      </section>
+
+    </div><!-- /slides -->
+
+    <!-- Slide footer -->
+    <div class="slide-footer">
+      <div class="slide-counter mono" id="counter">01 / 07</div>
+      <div class="slide-progress"><div class="slide-progress-fill" id="progress"></div></div>
+      <div class="footer-brand">PurchasePlus</div>
+    </div>
+
+    <!-- Nav arrows -->
+    <div class="nav-arrows">
+      <button class="nav-arrow" id="prev" aria-label="Previous">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+      </button>
+      <button class="nav-arrow" id="next" aria-label="Next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+    </div>
+
+  </main>
+
+</div>
+
+<script>
+(function() {
+  var slides  = Array.from(document.querySelectorAll('.slide'));
+  var sbList  = document.getElementById('sbList');
+  var prevBtn = document.getElementById('prev');
+  var nextBtn = document.getElementById('next');
+  var counter = document.getElementById('counter');
+  var progress = document.getElementById('progress');
+  var total   = slides.length;
+  var current = 0;
+
+  slides.forEach(function(s, i) {
+    var item = document.createElement('div');
+    item.className = 'sb-item' + (i === 0 ? ' is-active' : '');
+    item.dataset.idx = i;
+    item.innerHTML =
+      '<div class="sb-item-num">' + String(i + 1).padStart(2, '0') + '</div>' +
+      '<div class="sb-item-label">' + s.dataset.title + '</div>';
+    item.addEventListener('click', function() { go(i); });
+    sbList.appendChild(item);
+  });
+
+  var mainEl = document.getElementById('mainEl');
+  function isMobile() { return window.innerWidth <= 1100; }
+
+  function go(i) {
+    if (i < 0 || i >= total) return;
+    if (!isMobile() && i === current) return;
+    sbList.children[current].classList.remove('is-active');
+    current = i;
+    sbList.children[current].classList.add('is-active');
+    if (isMobile()) {
+      mainEl.scrollTo({ top: i * 2 * window.innerHeight, behavior: 'smooth' });
+    } else {
+      slides.forEach(function(s, idx) { s.classList.toggle('is-active', idx === i); });
+    }
+    updateChrome();
+  }
+
+  mainEl.addEventListener('scroll', function() {
+    if (!isMobile()) return;
+    var dvh = window.innerHeight;
+    if (!dvh) return;
+    var sectionIdx = Math.round(mainEl.scrollTop / dvh);
+    var slideIdx = Math.min(Math.floor(sectionIdx / 2), total - 1);
+    if (slideIdx !== current) {
+      sbList.children[current].classList.remove('is-active');
+      current = slideIdx;
+      sbList.children[current].classList.add('is-active');
+      updateChrome();
+    }
+  }, { passive: true });
+
+  window.addEventListener('resize', function() {
+    if (!isMobile()) {
+      slides.forEach(function(s, idx) { s.classList.toggle('is-active', idx === current); });
+      mainEl.scrollTop = 0;
+    } else {
+      slides.forEach(function(s) { s.classList.remove('is-active'); });
+    }
+  });
+
+  function updateChrome() {
+    counter.textContent = String(current + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+    progress.style.width = (((current + 1) / total) * 100) + '%';
+    prevBtn.classList.toggle('is-disabled', current === 0);
+    nextBtn.classList.toggle('is-disabled', current === total - 1);
+  }
+
+  prevBtn.addEventListener('click', function() {
+    if (isMobile()) { mainEl.scrollBy({ top: -window.innerHeight, behavior: 'smooth' }); }
+    else { go(current - 1); }
+  });
+  nextBtn.addEventListener('click', function() {
+    if (isMobile()) { mainEl.scrollBy({ top: window.innerHeight, behavior: 'smooth' }); }
+    else { go(current + 1); }
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (isMobile()) return;
+    if (['ArrowDown', 'ArrowRight', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); go(current + 1); }
+    else if (['ArrowUp', 'ArrowLeft', 'PageUp'].includes(e.key))      { e.preventDefault(); go(current - 1); }
+    else if (e.key === 'Home') { e.preventDefault(); go(0); }
+    else if (e.key === 'End')  { e.preventDefault(); go(total - 1); }
+  });
+
+  var wheelCooldown = false;
+  document.addEventListener('wheel', function(e) {
+    if (isMobile()) return;
+    var scrollable = e.target.closest('.slide-left');
+    if (scrollable) {
+      var atBottom = scrollable.scrollTop + scrollable.clientHeight >= scrollable.scrollHeight - 10;
+      var atTop    = scrollable.scrollTop <= 10;
+      if ((e.deltaY > 0 && !atBottom) || (e.deltaY < 0 && !atTop)) return;
+    }
+    if (wheelCooldown || Math.abs(e.deltaY) < 30) return;
+    e.preventDefault();
+    wheelCooldown = true;
+    go(e.deltaY > 0 ? current + 1 : current - 1);
+    setTimeout(function() { wheelCooldown = false; }, 800);
+  }, { passive: false });
+
+  updateChrome();
+
+  var sb      = document.getElementById('sidebar');
+  var toggle  = document.getElementById('sbToggle');
+  var overlay = document.getElementById('sbOverlay');
+  function closeSb() { sb.classList.remove('is-open'); overlay.classList.remove('is-open'); }
+  if (toggle) {
+    toggle.addEventListener('click', function() {
+      var open = sb.classList.toggle('is-open');
+      overlay.classList.toggle('is-open', open);
+    });
+    overlay.addEventListener('click', closeSb);
+    sbList.addEventListener('click', closeSb);
+  }
+
+  var touchX = null;
+  document.addEventListener('touchstart', function(e) { touchX = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', function(e) {
+    if (isMobile()) { touchX = null; return; }
+    if (touchX === null) return;
+    var dx = e.changedTouches[0].clientX - touchX;
+    touchX = null;
+    if (Math.abs(dx) > 48) { dx < 0 ? go(current + 1) : go(current - 1); }
+  }, { passive: true });
+})();
+</script>
+</body>
+</html>
