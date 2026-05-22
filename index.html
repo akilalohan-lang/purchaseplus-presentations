@@ -630,21 +630,14 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
         </div>
 
         <div class="slide-right" style="overflow:hidden;">
-          <!-- Device image fills the full panel — devices show in lower ~65% -->
-          <img src="assets/PurchasePlus UI & UX/002_responsive-marketplace-desktop-mobile.png"
-               alt="PurchasePlus on desktop and mobile"
-               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;z-index:1;">
-          <!-- Gradient mask: blends away the image's purple sky, reveals brand bg -->
-          <div style="position:absolute;top:0;left:0;right:0;height:42%;z-index:2;
-                      background:linear-gradient(180deg,#f0e8ff 0%,#ece8ff 45%,rgba(240,232,255,0) 100%);"></div>
-          <!-- Radial brand glow behind clouds -->
-          <div style="position:absolute;top:0;left:0;right:0;height:50%;z-index:3;
+          <!-- Radial brand glow -->
+          <div style="position:absolute;top:0;left:0;right:0;height:50%;z-index:1;
                       background:radial-gradient(ellipse 90% 70% at 60% 0%,rgba(169,86,255,.22) 0%,transparent 70%);"></div>
-          <!-- Clouds sit over the gradient fade -->
+          <!-- Clouds -->
           <img src="assets/Colourful UI UX/Stand Alone/CLOUDS.png" alt=""
-               style="position:absolute;top:-8%;left:-12%;width:58%;opacity:.72;z-index:4;transform:rotate(-8deg);">
+               style="position:absolute;top:-8%;left:-12%;width:58%;opacity:.72;z-index:2;transform:rotate(-8deg);">
           <img src="assets/Colourful UI UX/Stand Alone/CLOUDS.png" alt=""
-               style="position:absolute;top:-5%;right:-16%;width:52%;opacity:.55;z-index:4;transform:rotate(15deg) scaleX(-1);">
+               style="position:absolute;top:-5%;right:-16%;width:52%;opacity:.55;z-index:2;transform:rotate(15deg) scaleX(-1);">
         </div>
 
       </section>
