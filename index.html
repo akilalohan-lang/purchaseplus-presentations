@@ -1104,7 +1104,44 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
     touchX = null;
     if (Math.abs(dx) > 48) { dx < 0 ? go(current + 1) : go(current - 1); }
   }, { passive: true });
+
+  /* ── Mode switcher ── */
+  var modeBar = document.getElementById('modeBar');
+  if (modeBar) {
+    modeBar.querySelectorAll('.mode-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        modeBar.querySelectorAll('.mode-btn').forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        document.documentElement.setAttribute('data-mode', btn.dataset.mode);
+      });
+    });
+  }
+
+  /* ── PPTX export ── */
+  window.exportPptx = function() {
+    var notify = document.createElement('div');
+    notify.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:9999;background:#1f1f1f;border:1px solid #333;border-radius:10px;padding:14px 18px;font-family:Inter,sans-serif;font-size:13px;color:#fff;box-shadow:0 8px 32px rgba(0,0,0,.5);max-width:320px;line-height:1.5;';
+    notify.innerHTML = '<div style="font-weight:700;margin-bottom:4px;">Export to PPTX</div><div style="color:#888;font-size:12px;">Open this presentation in Claude Code and run the powerpoint-pptx skill to generate a downloadable .pptx file.</div>';
+    document.body.appendChild(notify);
+    setTimeout(function() { notify.remove(); }, 5000);
+  };
+
 })();
 </script>
+
+<!-- Mode switcher + PPTX export overlay (bottom-left) -->
+<div id="modeBar" style="position:fixed;bottom:24px;left:24px;z-index:500;display:flex;flex-direction:column;gap:8px;align-items:flex-start;">
+  <div style="display:flex;align-items:center;gap:4px;background:rgba(15,15,15,.88);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.10);border-radius:10px;padding:5px;">
+    <button class="mode-btn active" data-mode="light"    style="padding:5px 10px;border-radius:6px;font-size:11px;font-weight:600;color:#888;border:0;background:none;cursor:pointer;font-family:Inter,sans-serif;" onclick="document.documentElement.setAttribute('data-mode','light');document.querySelectorAll('.mode-btn').forEach(function(b){b.style.background=b.dataset.mode==='light'?'rgba(255,255,255,.12)':'none';b.style.color=b.dataset.mode==='light'?'#fff':'#888';})">Light</button>
+    <button class="mode-btn"        data-mode="dark"     style="padding:5px 10px;border-radius:6px;font-size:11px;font-weight:600;color:#888;border:0;background:none;cursor:pointer;font-family:Inter,sans-serif;" onclick="document.documentElement.setAttribute('data-mode','dark');document.querySelectorAll('.mode-btn').forEach(function(b){b.style.background=b.dataset.mode==='dark'?'rgba(255,255,255,.12)':'none';b.style.color=b.dataset.mode==='dark'?'#fff':'#888';})">Dark</button>
+    <button class="mode-btn"        data-mode="gradient" style="padding:5px 10px;border-radius:6px;font-size:11px;font-weight:600;color:#888;border:0;background:none;cursor:pointer;font-family:Inter,sans-serif;" onclick="document.documentElement.setAttribute('data-mode','gradient');document.querySelectorAll('.mode-btn').forEach(function(b){b.style.background=b.dataset.mode==='gradient'?'rgba(255,255,255,.12)':'none';b.style.color=b.dataset.mode==='gradient'?'#fff':'#888';})">Gradient</button>
+    <button class="mode-btn"        data-mode="neutral"  style="padding:5px 10px;border-radius:6px;font-size:11px;font-weight:600;color:#888;border:0;background:none;cursor:pointer;font-family:Inter,sans-serif;" onclick="document.documentElement.setAttribute('data-mode','neutral');document.querySelectorAll('.mode-btn').forEach(function(b){b.style.background=b.dataset.mode==='neutral'?'rgba(255,255,255,.12)':'none';b.style.color=b.dataset.mode==='neutral'?'#fff':'#888';})">Neutral</button>
+  </div>
+  <button onclick="exportPptx()" style="display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;background:linear-gradient(135deg,#a956ff,#3766fe);color:#fff;font-size:12px;font-weight:600;border:0;cursor:pointer;font-family:Inter,sans-serif;box-shadow:0 2px 12px rgba(124,93,255,.3);">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    Download PPTX
+  </button>
+</div>
+
 </body>
 </html>
